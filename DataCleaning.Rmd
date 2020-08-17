@@ -1,0 +1,128 @@
+---
+title: "Data Cleaning"
+author: "Laura Albrecht"
+date: "8/17/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+1. Load in the Colorado COVID data set using the code below.  
+Note: you will need to install the readr package first. 
+```{r message = FALSE, warning=FALSE}
+library(readr)
+colorado_covid <- read_csv("colorado_covid.csv")
+
+```
+
+```{r echo = FALSE, warning = FALSE, message=FALSE}
+library(tidyverse)
+colorado_messiest <- colorado_covid
+colorado_messy <- colorado_covid %>% group_by(onset_dt , sex, age_group, `Race and ethnicity (combined)`) %>% summarise(cases = n())
+
+
+
+colorado_clean <- separate(colorado_messy, `Race and ethnicity (combined)`, sep = ", ", into = c("race", "ethnicity"))
+
+colorado_clean <- separate(colorado_clean, age_group, sep = " Years", into = c("age_group", NA))
+
+colnames(colorado_clean)[1] <- "date"
+```
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+
+2.  Use head() and str() to see what is in the data set.
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+
+3. In the current format, each row represents one case. This isn't very helpful for understanding and visualizing the data. Try to reformat the data and save a new data frame to recreate the following:
+
+```{r echo = FALSE}
+colorado_messy
+```
+&nbsp;  
+&nbsp;  
+Hint: The function "n()" can be used to find a group size
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+
+4. The fourth column contains both race and ethnicity in one. Separate these variables into two columns called "race" and "ethnicity".
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+
+
+
+5. In the age_group column, delete the word "Years" from every row.
+
+Hint: There are many ways you could do this. Look at the separate function or gsub function help files to find two options. 
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+  
+
+
+ 
+
+6. Change the name of the first column to "date".
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+  
+  
+  
+
+
+Now your data should look like this:
+
+```{r echo=FALSE}
+colorado_clean
+```
+  
+7. Use the ggplot2 package to visualize the data in a way you think is interesting. Assign variables to color, fill, or facets to display the data in different ways.
+
+```{r include = FALSE}
+p <- colorado_covid %>% group_by(onset_dt ) %>% summarise(cases = n()) %>% ggplot(aes(x = onset_dt,y = cases))
+p + geom_point()
+p+geom_line()+scale_y_continuous(limits = c(0,20000))
+```
+```{r include = FALSE}
+p <- colorado_covid %>% group_by(cdc_report_dt ) %>% summarise(cases = n()) %>% ggplot(aes(x = cdc_report_dt,y = cases))
+p <- colorado_covid %>% filter(sex== "Female" | sex =="Male") %>% group_by(cdc_report_dt, sex, age_group) %>% summarise(cases = n()) %>% ggplot(aes(x = cdc_report_dt, y = cases))
+p+geom_line(aes(color = sex)) + facet_wrap(~age_group)
+colorado_clean$cases %>% which.max()
+colorado_clean[20750,]
+```
+
+```{r include = FALSE}
+colorado_covid %>% group_by(onset_dt ) %>% summarise(cases = n()) %>% filter(as.Date("2020-02-15") < onset_dt & onset_dt < as.Date("2020-07-01")) %>% ggplot(aes(onset_dt, cases))+ geom_line()
+```
+

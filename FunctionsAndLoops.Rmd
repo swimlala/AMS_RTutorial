@@ -1,0 +1,128 @@
+---
+title: "Writing Functions and Loops"
+author: "Laura Albrecht"
+date: "8/17/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Functions
+1. Here's a function:
+
+```{r}
+f1 <- function(x) { y <- x + 1
+return(y) }
+```
+
+If we replace return(y) by just y does this function do the same thing?
+
+```{r}
+f2 <- function(x) { y <- x + 1
+y }
+```
+
+Pass a few values to f1() and f2() and check the results
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+2. Write a function that takes the relative difference between two arguments, x and y:
+
+\begin{equation}
+f(x,y) = |\frac{x - y}{y}|
+\end{equation}
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+3. What happens when you pass x = 1 and y = 0 to the previous function? What about when you pass x = 0 and y = 0?
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+4. Rewrite your function so that it has a defalut value of 1 for y.
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+5. Add an if statment to your function so it prints an error message if y = 0.
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+
+
+6. Create a for loop that finds the square root of every element in the following vector:
+```{r}
+x <- c(2, 4, 6, 8, 10)
+```
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+7. Add an else statement to the following code in the case that Team B wins
+
+```{r}
+team_a <- 3 # Number of goals scored by Team A
+team_b <- 1 # Number of goals scored by Team B
+if (team_a > team_b){
+  print ("Team A wins")
+}
+```
+
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;  
+&nbsp;
+
+8. team_a and team_b play in a best of 7 series. The scores are given in the following vectors:
+
+```{r}
+team_a <- c(4, 1, 2, 3, 1, 0, 2)
+team_b <- c(0, 2, 3, 2, 0, 2, 1)
+```
+
+Write a for loop to print the name of the team that won each game.
+
+```{r include = FALSE, echo = FALSE}
+for(i in 1:7){
+  if(team_a[i] < team_b[i]){
+    print("Team B won")
+  } else{
+    print("Team A won")
+  }
+}
+
+```
+
