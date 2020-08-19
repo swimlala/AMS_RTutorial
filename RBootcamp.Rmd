@@ -1,6 +1,6 @@
 ---
 title: "Intro To R"
-subtitle: "aka Why I Love R And You Should Too"
+subtitle: "AKA Why I Love R And You Should Too"
 author: "Laura Albrecht"
 output:
   beamer_presentation: default
@@ -93,7 +93,7 @@ kable(data.frame(Option = c("echo", "eval", "include", "message", "warning"), De
 | Run current line/selection | Ctrl+Enter | Command+Return |
 | Run current chunk | Ctrl+Alt+C | Command+Option+C|
 | Comment/Uncomment lines | Ctrl+Shift+C | Command+Shift+C|
-
+| Insert pipe (%>%) | Ctrl+Shift+M | Command+Shift+M |
 
 ## R Basics 
 ###Assignment
@@ -193,6 +193,13 @@ rnorm(10, 0, 1)
 library(knitr)
 library(ggplot2)
 include_graphics(randimage_path)
+```
+
+
+##Naming Conventions
+
+```{r echo = FALSE, out.height="80%"}
+include_graphics("./Images/coding_cases.png")
 ```
 
 ## Vector Calculations
@@ -523,7 +530,7 @@ Combine vectors, matrices, or data frames
 cbind(x, y) # x and y need to have same number of rows
 
 # Combine rows of x and z
-rbind(x, z) # x and z need to have the same number of columns
+rbind(x, z) # x and z need to have the same number of cols
 
 df$letters = c("a", "b", "c") # add a column by name
 ```
@@ -719,14 +726,20 @@ par(mfrow = c(nrow, ncol))
 Plots called after this will be plotted on a grid of nrow and ncol
 
 ## Example Plot
-```{r}
-plot(starwars$height, starwars$mass, xlab = "Height", ylab = "Mass", main = "Star Wars Characters Mass vs Height", pch = 16, col = "blue")
+```{r out.height="50%", fig.align="center"}
+plot(starwars$height, starwars$mass, 
+     xlab = "Height", ylab = "Mass", 
+     main = "Star Wars Characters Mass vs Height", 
+     pch = 16, col = "blue")
 ```
 
 ##Example Plot
 Let's zoom in so we don't include the outlier in the plot
-```{r}
-plot(starwars$height, starwars$mass, xlab = "Height", ylab = "Mass", main = "Star Wars Characters Mass vs Height", pch = 16, col = "magenta",ylim = c(0, 180))
+```{r out.height = "50%", fig.align="center"}
+plot(starwars$height, starwars$mass, 
+     xlab = "Height", ylab = "Mass", 
+     main = "Star Wars Characters Mass vs Height", 
+     pch = 16, col = "magenta", ylim = c(0, 180))
 ```
 
 ## ggplot2
@@ -748,7 +761,8 @@ include_graphics("./Images/ggplot2_masterpiece.png")
 You can use this same code template to make any plot:
 
 ```{r eval = FALSE}
-ggplot(data = <DATA>, aes(x = <X_VARIABLE>, y = <Y_VARIABLE>)) +
+ggplot(data = <DATA>, 
+       aes(x = <X_VARIABLE>, y = <Y_VARIABLE>)) + 
   <GEOM_FUNCTION>()
 ```
 
@@ -775,7 +789,7 @@ ggplot(starwars, aes(sex)) +
 ```
 
 ## ggplot2
-```{r out.height="80%"}
+```{r out.height="75%"}
 ggplot(starwars, aes(x = sex, y =height)) + 
   geom_boxplot() + theme(text = element_text(size = 24))
 ```
@@ -800,7 +814,7 @@ ggplot(starwars)+ geom_bar(aes(eye_color, fill = sex)) +
 
 ## ggplot2
 In bar or col plots, use position = "dodge" if you want side by side bars instead of stacked
-```{r out.height="55%", fig.align="center"}
+```{r out.height="50%", fig.align="center"}
 ggplot(starwars) + 
   geom_bar(aes(eye_color, fill = sex), position = "dodge") +
   theme(text = element_text(size = 24), axis.text.x =
@@ -849,7 +863,8 @@ colorado_clean %>%
   facet_wrap(~age_group)+
   scale_y_continuous(limits = c(0,2000)) + 
   labs(x = "Date", y = "Cases", color = "Sex", 
-       title = "Colorado COVID-19 Cases")
+       title = "Colorado COVID-19 Cases") +
+  theme(text = element_text(size = 24))
 ```
 
 ## Some Other Useful/Fun Packages
